@@ -1,0 +1,77 @@
+<HTML>
+<head>
+</head>
+<body>
+<?PHP
+include "../entities/livraison.php";
+include "../core/livraisonC.php";
+if (isset($_GET['id'])){
+	$livraisonC=new LivraisonC();
+    $result=$livraisonC->recupererLivraison($_GET['id']);
+	foreach($result as $row){
+		$id=$row['id'];
+		$nom=$row['nom'];
+		$email=$row['email'];
+		$numero=$row['numero'];
+		$pays=$row['pays'];
+		$adresse=$row['adresse'];
+		$devise=$row['devise'];
+		$paiement=$row['paiement'];
+?>
+<form method="POST">
+<table>
+<caption>Modifier Livraison</caption>
+<tr>
+<td>Id</td>
+<td><input type="number" name="id" value="<?PHP echo $id ?>"></td>
+</tr>
+<tr>
+<td>Nom</td>
+<td><input type="text" name="nom" value="<?PHP echo $nom ?>"></td>
+</tr>
+<tr>
+<td>Email</td>
+<td><input type="text" name="email" value="<?PHP echo $email?>"></td>
+</tr>
+<tr>
+<td>Numéro</td>
+<td><input type="text" name="numero" value="<?PHP echo $numero ?>"></td>
+</tr>
+<tr>
+<td>Pays</td>
+<td><input type="text" name="pays" value="<?PHP echo $pays ?>"></td>
+</tr>
+<tr>
+<td>Adresse</td>
+<td><input type="text" name="adresse" value="<?PHP echo $adresse ?>"></td>
+</tr>
+<tr>
+<td>Pays</td>
+<td><input type="text" name="devise" value="<?PHP echo $devise ?>"></td>
+</tr>
+<tr>
+<td>Paiement</td>
+<td><input type="text" name="paiement" value="<?PHP echo $paiement ?>"></td>
+</tr>
+<tr>
+<td></td>
+<td><input type="submit" name="modifier" value="modifier"></td>
+</tr>
+<tr>
+<td></td>
+<td><input type="hidden" name="id_ini" value="<?PHP echo $_GET['id'];?>"></td>
+</tr>
+</table>
+</form>
+<?PHP
+	}
+}
+if (isset($_POST['modifier'])){
+	$livraison=new livraison($_POST['id'],$_POST['nom'],$_POST['email'],$_POST['numero'],$_POST['pays'],$_POST['adresse'],$_POST['devise'],$_POST['paiement']);
+	$livraisonC->modifierLivraison($livraison,$_POST['id_ini']);
+	echo $_POST['id_ini'];
+	header('Location: afficherLivraison.php');
+}
+?>
+</body>
+</HTMl>
