@@ -12,10 +12,7 @@ var_dump($employe1);
 //Partie3
 $livraison1C=new LivraisonC();
 $livraison1C->ajouterLivraison($livraison1);
-
-	
-}else{
-	echo "vérifier les champs";
+header('Location: index.html');	
 }
 //*/
 
