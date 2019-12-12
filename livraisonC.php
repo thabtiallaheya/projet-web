@@ -1,4 +1,4 @@
-<?PHP
+﻿<?PHP
 include "../config.php";
 class LivraisonC {
 
@@ -46,23 +46,23 @@ class LivraisonC {
             die('Erreur: '.$e->getMessage());
         }	
 	}
-    function modifierLivraison($livraison,$id){
-		$sql="UPDATE livraison SET id=:idd, nom=:nom,email=:email,numero=:numero,pays=:pays,adresse=:adresse,devise=:devise,paiement=:paiement WHERE id=:id";
-		
+	function modifierLivraison($livraison){
+		$sql="UPDATE produits SET id=:id,nom=:nom,email=:email,numero=:numero,pays=:pays,adresse=:adresse,devise=:devise,paiement=:paiement WHERE id=:id";
+
 		$db = config::getConnexion();
-		//$db->setAttribute(PDO::ATTR_EMULATE_PREPARES,false);
-try{		
-        $req=$db->prepare($sql);
-		$idd=$livraison->getId();
+		
+try{
+		$req=$db->prepare($sql);
+	
+        $id=$livraison->getId();
         $nom=$livraison->getNom();
         $email=$livraison->getEmail();
-        $numero=$livraison->getNumero();
+		$numero=$livraison->getNumero();
 		$pays=$livraison->getPays();
-		$adresse=$livraison->getAdresse();
+        $adresse=$livraison->getAdresse();
 		$devise=$livraison->getDevise();
 		$paiement=$livraison->getPaiement();
-		$datas = array(':idd'=>$idd, ':id'=>$id, ':nom'=>$nom,':email'=>$email,':numero'=>$numero,':pays'=>$pays,':adresse'=>$adresse,':devise'=>$devise,':paiement'=>$paiement);
-		$req->bindValue(':idd',$idd);
+		$datas = array(':id'=>$id,':nom'=>$nom,':email'=>$email,':numero'=>$numero,':pays'=>$pays,':adresse'=>$adresse,':devise'=>$devise,':paiement'=>$paiement);
 		$req->bindValue(':id',$id);
 		$req->bindValue(':nom',$nom);
 		$req->bindValue(':email',$email);
@@ -72,18 +72,14 @@ try{
 		$req->bindValue(':devise',$devise);
 		$req->bindValue(':paiement',$paiement);
 		
-		
-		
             $s=$req->execute();
-			
            // header('Location: index.php');
         }
         catch (Exception $e){
             echo " Erreur ! ".$e->getMessage();
-   echo " Les datas : " ;
-  print_r($datas);
+   			echo " Les datas : " ;
+  			print_r($datas);
         }
-		
 	}
 	function recupererLivraison($id){
 		$sql="SELECT * from livraison where id=$id";
@@ -98,7 +94,7 @@ try{
 	}
 	
 	function rechercherListeLivraisons($id){
-		$sql="SELECT * from livraison where numero=$id";
+		$sql="SELECT * from livraison where id=$id";
 		$db = config::getConnexion();
 		try{
 		$liste=$db->query($sql);
@@ -123,16 +119,16 @@ try{
             die('Erreur: '.$e->getMessage());
         }
 	}
-
-
-
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
 
 ?>
